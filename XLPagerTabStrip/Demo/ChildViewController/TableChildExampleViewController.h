@@ -28,5 +28,7 @@
 
 @interface TableChildExampleViewController : UITableViewController <XLPagerTabStripChildItem>
 
+//fb:#1: property used in a demo purpose to distinguish the pages
+@property (nonatomic, assign) NSInteger childIndex;
 
 @end

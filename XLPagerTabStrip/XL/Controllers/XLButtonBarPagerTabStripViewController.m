@@ -182,6 +182,11 @@
     
     [buttonBarCell.label setText:[childController titleForPagerTabStripViewController:self]];
     
+    //fb:#1: if an image is defined for the page then it's shown in addition to the title according to what is defined inside the XIB file.
+    if ([childController respondsToSelector:@selector(imageForPagerTabStripViewController:)]) {
+        [buttonBarCell.imageView setImage:[childController imageForPagerTabStripViewController:self]];
+    }
+    
     return buttonBarCell;
 }
 

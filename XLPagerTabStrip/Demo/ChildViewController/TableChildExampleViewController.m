@@ -157,5 +157,21 @@ NSString *const kCellIdentifier = @"PostCell";
     return [formatter dateFromString:dateString];
 }
 
+//fb:bb#1: array of images to display on the bar button cells for a demo purpose only
+static NSString * kButtonBarMenuImages[9] = {@"Apu_Nahasapeemapetilon", @"Bart_Simpsons", @"Homer_Simpsons", @"Lisa_Simpsons", @"Maggie_Simpsons", @"Marge_Simpsons", @"Montgomery_Burns", @"Ned_Flanders", @"Otto_Mann"};
+
+/**
+ * Return the image to show on the bar button cell according to this page
+ *
+ * @author fb
+ * @version fb:#1
+ */
+- (UIImage *)imageForPagerTabStripViewController:(XLPagerTabStripViewController *)pagerTabStripViewController
+{
+    NSInteger index = self.childIndex;
+    UIImage *image = [UIImage imageNamed:kButtonBarMenuImages[index]];
+    
+    return image;
+}
 
 @end

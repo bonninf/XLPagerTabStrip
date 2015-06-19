@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,24 +11,43 @@
             <rect key="frame" x="0.0" y="0.0" width="80" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4bA-d3-zGi">
-                    <rect key="frame" x="19" y="10" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4bA-d3-zGi">
+                    <rect key="frame" x="0.0" y="25" width="80" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="gBY-UN-puj"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lEF-Jg-moj">
+                    <rect key="frame" x="25" y="3" width="27" height="27"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="5sJ-Ay-ivs"/>
+                        <constraint firstAttribute="height" constant="30" id="GUn-26-oW1"/>
+                    </constraints>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="4bA-d3-zGi" secondAttribute="centerX" id="kcH-EZ-rRx"/>
-                <constraint firstAttribute="centerY" secondItem="4bA-d3-zGi" secondAttribute="centerY" id="lcE-iT-kgq"/>
+                <constraint firstAttribute="centerX" secondItem="lEF-Jg-moj" secondAttribute="centerX" id="A2N-9a-FFI"/>
+                <constraint firstItem="lEF-Jg-moj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Dho-xL-ruf"/>
+                <constraint firstItem="4bA-d3-zGi" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="N9p-Mr-1zv"/>
+                <constraint firstItem="4bA-d3-zGi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="NhQ-nl-umB"/>
+                <constraint firstAttribute="centerX" secondItem="4bA-d3-zGi" secondAttribute="centerX" id="XAR-HG-mgT"/>
+                <constraint firstAttribute="bottom" secondItem="4bA-d3-zGi" secondAttribute="bottom" constant="3" id="iqh-dJ-8fQ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="N9p-Mr-1zv"/>
+                </mask>
+            </variation>
             <connections>
+                <outlet property="imageView" destination="lEF-Jg-moj" id="8Yz-cW-t4p"/>
                 <outlet property="label" destination="4bA-d3-zGi" id="Ckx-bG-ZhP"/>
             </connections>
-            <point key="canvasLocation" x="471.5" y="429"/>
+            <point key="canvasLocation" x="471" y="429"/>
         </view>
     </objects>
 </document>
