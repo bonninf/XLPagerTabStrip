@@ -38,45 +38,55 @@
     // Do any additional setup after loading the view.
     [self.buttonBarView.selectedBar setBackgroundColor:[UIColor orangeColor]];
     
-    //fb:bb#1: register the ButtonCell.xib to illustrate the use of the image inside the bar button cell.
+    //fb:gh#1: register the ButtonCell.xib to illustrate the use of the image inside the bar button cell.
     [self.buttonBarView registerNib:[UINib nibWithNibName:@"ButtonCell" bundle:nil]  forCellWithReuseIdentifier:@"Cell"];
+    
+    //fb:gh#2: below 5 items then the buttons get the same width
+    self.maxItemsForBarWidth = 4;
 }
 
 #pragma mark - XLPagerTabStripViewControllerDataSource
 
 -(NSArray *)childViewControllersForPagerTabStripViewController:(XLPagerTabStripViewController *)pagerTabStripViewController
 {
-    // create child view controllers that will be managed by XLPagerTabStripViewController
-    TableChildExampleViewController * child_1 = [[TableChildExampleViewController alloc] initWithStyle:UITableViewStylePlain];
-    child_1.childIndex = 1; //fb:bb#1: each page is associated to an index to be able to distinguish it in the imageForPagerTabStripViewController delegate method.
-    ChildExampleViewController * child_2 = [[ChildExampleViewController alloc] init];
-    child_2.childIndex = 2;
-    TableChildExampleViewController * child_3 = [[TableChildExampleViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    child_3.childIndex = 3;
-    ChildExampleViewController * child_4 = [[ChildExampleViewController alloc] init];
-    child_4.childIndex = 4;
-    TableChildExampleViewController * child_5 = [[TableChildExampleViewController alloc] initWithStyle:UITableViewStylePlain];
-    child_5.childIndex = 5;
-    ChildExampleViewController * child_6 = [[ChildExampleViewController alloc] init];
-    child_6.childIndex = 6;
-    TableChildExampleViewController * child_7 = [[TableChildExampleViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    child_7.childIndex = 7;
-    ChildExampleViewController * child_8 = [[ChildExampleViewController alloc] init];
-    child_8.childIndex = 8;
-    if (!_isReload){
-        return @[child_1, child_2, child_3, child_4, child_5, child_6, child_7, child_8];
+    //fb:gh#2: the method is modified to easily be able selecting the max number of child pages to build
+    NSUInteger childMax = 4;
+
+    NSArray *modelChilds = @[[[TableChildExampleViewController alloc] initWithStyle:UITableViewStylePlain], [[ChildExampleViewController alloc] init], [[TableChildExampleViewController alloc] initWithStyle:UITableViewStyleGrouped]];
+    NSUInteger modelCount = [modelChilds count];
+    
+    NSMutableArray *childControllers = [NSMutableArray array];
+    for (int i=0; i<childMax; i++) {
+        int index = i % modelCount;
+        
+        // create child view controllers that will be managed by XLPagerTabStripViewController
+        id child = modelChilds[index];
+        
+        //fb:bb#1: each page is associated to an index to be able to distinguish it in the imageForPagerTabStripViewController delegate method.
+        [child setChildIndex:i];
+        [childControllers addObject:child];
     }
     
-    NSMutableArray * childViewControllers = [NSMutableArray arrayWithObjects:child_1, child_2, child_3, child_4, child_5, child_6, child_7, child_8, nil];
-    NSUInteger count = [childViewControllers count];
-    for (NSUInteger i = 0; i < count; ++i) {
-        // Select a random element between i and end of array to swap with.
-        NSUInteger nElements = count - i;
-        NSUInteger n = (arc4random() % nElements) + i;
-        [childViewControllers exchangeObjectAtIndex:i withObjectAtIndex:n];
+    NSArray *resultArray;
+    if (!_isReload){
+        resultArray = [NSArray arrayWithArray:childControllers];
     }
-    NSUInteger nItems = 1 + (rand() % 8);
-    return [childViewControllers subarrayWithRange:NSMakeRange(0, nItems)];
+    else {
+        NSUInteger nItems = 1 + (rand() % modelCount);
+        
+        //    NSMutableArray * childViewControllers = [NSMutableArray arrayWithObjects:child_1, child_2, child_3, child_4, child_5, child_6, child_7, child_8, nil];
+        //    NSUInteger nItems = 1 + (rand() % 8);
+        
+        NSUInteger count = [childControllers count];
+        for (NSUInteger i = 0; i < count; ++i) {
+            // Select a random element between i and end of array to swap with.
+            NSUInteger nElements = count - i;
+            NSUInteger n = (arc4random() % nElements) + i;
+            [childControllers exchangeObjectAtIndex:i withObjectAtIndex:n];
+        }
+        resultArray = [childControllers subarrayWithRange:NSMakeRange(0, nItems)];
+    }
+    return resultArray;
 }
 
 -(void)reloadPagerTabStripView

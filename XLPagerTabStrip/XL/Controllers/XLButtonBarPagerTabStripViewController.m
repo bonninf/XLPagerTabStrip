@@ -43,6 +43,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.shouldUpdateButtonBarView = YES;
+
+        //fb:gh#2: set 0 amounts to disable this option
+        self.maxItemsForBarWidth = 0;
     }
     return self;
 }
@@ -52,6 +55,9 @@
     self = [super initWithCoder:coder];
     if (self) {
         self.shouldUpdateButtonBarView = YES;
+        
+        //fb:gh#2: set 0 amounts to disable this option
+        self.maxItemsForBarWidth = 0;
     }
     return self;
 }
@@ -142,14 +148,26 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UILabel * label = [[UILabel alloc] init];
-    [label setTranslatesAutoresizingMaskIntoConstraints:NO];
-    label.font = self.buttonBarView.labelFont;
-    UIViewController<XLPagerTabStripChildItem> * childController =   [self.pagerTabStripChildViewControllers objectAtIndex:indexPath.item];
-    [label setText:[childController titleForPagerTabStripViewController:self]];
-    CGSize labelSize = [label intrinsicContentSize];
+    CGSize itemSize;
     
-    return CGSizeMake(labelSize.width + (self.buttonBarView.leftRightMargin * 2), collectionView.frame.size.height);
+    //fb:gh#2: if theres are fewer items than the max items property then they get the same width elsewhere no change the width is adapted to the title length.
+    if ([self.pagerTabStripChildViewControllers count] > self.maxItemsForBarWidth) {
+        UILabel * label = [[UILabel alloc] init];
+        [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+        label.font = self.buttonBarView.labelFont;
+        UIViewController<XLPagerTabStripChildItem> * childController =   [self.pagerTabStripChildViewControllers objectAtIndex:indexPath.item];
+        [label setText:[childController titleForPagerTabStripViewController:self]];
+        CGSize labelSize = [label intrinsicContentSize];
+        
+        itemSize = CGSizeMake(labelSize.width + (self.buttonBarView.leftRightMargin * 2), collectionView.frame.size.height);
+    }
+    else {
+        NSInteger itemNumber = [self.pagerTabStripChildViewControllers count];
+        itemSize = CGSizeMake([UIScreen mainScreen].bounds.size.width/itemNumber, collectionView.frame.size.height);
+        
+    }
+    
+    return itemSize;
 }
 
 #pragma mark - UICollectionViewDelegate

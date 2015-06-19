@@ -30,4 +30,7 @@
 
 @property (readonly, nonatomic) XLButtonBarView * buttonBarView;
 
+//fb:gh#2: number of items below which all items have the same width.
+@property (nonatomic, assign) NSInteger maxItemsForBarWidth;
+
 @end
